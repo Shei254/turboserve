@@ -1,0 +1,22 @@
+{
+  "OutputFoldersPerTargetSystem": {
+    "Local Machine": [
+      "out\\build\\x64-Debug",
+      "out\\install\\x64-Debug"
+    ]
+  },
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\3rdparty",
+    "\\src\\samples",
+    "\\src\\samples\\asyncawait",
+    "\\src\\samples\\hello",
+    "\\src\\samples\\hello-no-meta",
+    "\\src\\samples\\send-money-json-api",
+    "\\src\\scripts",
+    "\\wwwroot"
+  ],
+  "SelectedNode": "\\wwwroot\\index.html",
+  "PreviewInSolutionExplorer": false
+}

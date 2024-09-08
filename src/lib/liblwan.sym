@@ -1,0 +1,83 @@
+LIBturboserve_1 {
+global:
+    turboserve_array_append_heap;
+    turboserve_array_append_inline;
+    turboserve_array_reset;
+    turboserve_array_sort;
+
+    turboserve_determine_mime_type_for_file_name;
+    turboserve_get_config_path;
+    turboserve_get_default_config;
+
+    turboserve_init;
+    turboserve_init_with_config;
+    turboserve_shutdown;
+
+    turboserve_job_add;
+    turboserve_job_del;
+
+    turboserve_main_loop;
+
+    turboserve_request_get_*;
+    turboserve_request_sleep;
+
+    turboserve_response_send_chunk;
+    turboserve_response_send_event;
+    turboserve_response_set_chunked;
+    turboserve_response_set_event_stream;
+    turboserve_prepare_response_header;
+    turboserve_prepare_response_header_full;
+
+    turboserve_set_url_map;
+
+    turboserve_status_critical*;
+    turboserve_status_critical_perror*;
+    turboserve_status_error*;
+    turboserve_status_info*;
+    turboserve_status_perror*;
+    turboserve_status_warning*;
+
+    turboserve_tpl_apply;
+    turboserve_tpl_apply_with_buffer;
+    turboserve_tpl_compile_file;
+    turboserve_tpl_compile_string;
+    turboserve_tpl_free;
+    turboserve_append_*_to_strbuf;
+    turboserve_tpl_*_is_empty;
+
+    turboserve_*_fd;
+
+    turboserve_strbuf_append_char;
+    turboserve_strbuf_append_printf;
+    turboserve_strbuf_append_str;
+    turboserve_strbuf_free;
+    turboserve_strbuf_init;
+    turboserve_strbuf_init_with_size;
+    turboserve_strbuf_new;
+    turboserve_strbuf_new_static;
+    turboserve_strbuf_new_with_size;
+    turboserve_strbuf_printf;
+    turboserve_strbuf_reset;
+    turboserve_strbuf_set;
+    turboserve_strbuf_set_static;
+
+    turboserve_module_info_*;
+    turboserve_handler_info_*;
+
+    turboserve_request_await_*;
+    turboserve_request_awaitv_*;
+    turboserve_request_async_*;
+
+    turboserve_straitjacket_enforce*;
+
+local:
+    *;
+};
+
+LIBturboserve_LUA_1 {
+global:
+    turboserve_lua_create_state;
+    turboserve_lua_state_last_error;
+    turboserve_lua_state_push_request;
+    turboserve_lua_get_request_from_userdata;
+} LIBturboserve_1;

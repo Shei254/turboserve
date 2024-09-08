@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <script type="text/javascript">
+            write_sock = new WebSocket("ws://localhost:8080/ws-write")
+            write_sock.onmessage = function (event) {
+              document.getElementById("write-output").innerText = event.data;
+            }
+            write_sock.onerror = function(event) {
+              document.getElementById("write-output").innerText = "Disconnected";
+              document.getElementById("write-output").style.background = "red";
+            }
+            write_sock.onopen = function(event) {
+              document.getElementById("write-output").style.background = "blue";
+            }
+            read_sock = new WebSocket("ws://localhost:8080/ws-read")
+            read_sock.onmessage = function (event) {
+              document.getElementById("read-output").innerText = event.data;
+            }
+            read_sock.onopen = function(event) {
+              document.getElementById("read-button").disabled = false;
+              document.getElementById("read-input").disabled = false;
+              document.getElementById("read-output").style.background = "blue";
+              document.getElementById("read-output").innerText = "";
+            }
+            read_sock.onerror = function(event) {
+              document.getElementById("read-button").disabled = true;
+              document.getElementById("read-input").disabled = true;
+              document.getElementById("read-output").innerText = "Disconnected";
+              document.getElementById("read-output").style.background = "red";
+            }
+            send_to_read_sock = function() {
+              read_sock.send(document.getElementById("read-input").value);
+            }
+            chat_sock = new WebSocket("ws://localhost:8080/ws-chat")
+            chat_sock.onopen = function(event) {
+              document.getElementById("chat-button").disabled = false;
+              document.getElementById("chat-input").disabled = false;
+              document.getElementById("chat-textarea").style.background = "blue";
+              document.getElementById("chat-input").innerText = "";
+            }
+            chat_sock.onerror = function(event) {
+              document.getElementById("chat-button").disabled = true;
+              document.getElementById("chat-input").disabled = true;
+              document.getElementById("chat-input").innerText = "Disconnected";
+              document.getElementById("chat-textarea").style.background = "red";
+            }
+            chat_sock.onmessage = function (event) {
+              document.getElementById("chat-textarea").value += event.data;
+            }
+            send_chat_msg = function() {
+              chat_sock.send(document.getElementById("chat-input").value);
+              document.getElementById("chat-input").value = "";
+            }
+        </script>
+    </head>
+    <body>
+       <h1>turboserve WebSocket demo!</h1>
+       <h2>Send-only sample: server is writing this continuously:</h2>
+       <p><div id="write-output" style="background: red; color: yellow">Disconnected</div></p>
+       <h2>Echo server sample:</h2>
+       <p><input id="read-input" disabled><button disabled id="read-button" onclick="send_to_read_sock()">Send</button></p>
+       <p>Server said this: <div id="read-output" style="background: red; color: yellow">Disconnected</div></p>
+       <h3>Chat sample:</h3>
+       Send message: <input id="chat-input" disabled><button disabled id="chat-button" onclick="send_chat_msg()">Send</button></p>
+       <textarea id="chat-textarea" rows="20" cols="120" style="color: yellow; background-color: red"></textarea>
+    </body>
+</html>

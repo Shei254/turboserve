@@ -1,0 +1,109 @@
+<html>
+  <head>
+    <title>🗜 omg it's a smolsite</title>
+    <style>
+      body {
+         font-family: sans-serif;
+         margin: 0;
+         padding: 0;
+         background-color: #4f2d51;
+         color: #ddd;
+         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23d7cbd9' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E")
+      }
+      iframe {
+	width: 100%;
+	height: calc(100% - 32px);
+	padding: 0;
+	margin: 0;
+	border: 0;
+	border-bottom: 1px solid #170b19;
+	background-color: white;
+      }
+      p {
+	margin: 3px;
+	margin-right: 6px;
+	text-align: right;
+	font-size: 16px;
+	text-shadow: 0 0 16px black;
+	float: right;
+      }
+      .darkened {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(255, 255, 255, .8);
+        backdrop-filter: blur(2px);
+        z-index: 998;
+      }
+      .big {
+        position: absolute;
+        width: auto;
+        height: calc(100% - 32px);
+        left: 16px;
+        top: 16px;
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+        z-index: 999;
+      }
+    </style>
+  </head>
+  <body id="b">
+    <iframe id="i"
+            sandbox="allow-scripts"
+            allowfullscreen="false"
+            allowpaymentrequest="false"
+            credentialless="true"
+            src="/s/{{digest}}/">
+    </iframe>
+
+{{has_qr_code?}}
+    <div id="shadow"></div>
+    <img src="/q/{{digest}}" width="32" height="31" id="qr" alt="QR Code" title="QR code" referrerpolicy="no-referrer">
+{{/has_qr_code?}}
+
+    <p>The address of this site contains the whole website! Learn how it works on <a style="color: white; text-decoration: none; font-weight: bold" href="/">🗜️smolsite.zip</a>.</p>
+    <script>let body = document.getElementById('b');
+body.addEventListener('dragenter', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        body.style.backgroundColor = '#2d4f51';
+}, false);
+body.addEventListener('dragleave', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        body.style.backgroundColor = '#4f2d51';
+}, false);
+body.addEventListener('dragover', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+}, false);
+body.addEventListener('drop', function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    if (e.dataTransfer.files.length == 0) {
+            alert('Drop a file!');
+    } else if (e.dataTransfer.files.length > 1) {
+            alert('Drop only one file!');
+    } else {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                    if (e.target.readyState == 2) {
+                            let base64 = e.target.result.slice('data:application/zip;base64,'.length);
+                            window.top.location = 'https://smolsite.zip/' + base64;
+                    }
+            };
+            reader.readAsDataURL(e.dataTransfer.files[0]);
+    }
+}, false);
+
+let qr = document.getElementById('qr');
+let shadow = document.getElementById('shadow');
+let toggleQr = function(e) { qr.classList.toggle('big'); shadow.classList.toggle('darkened'); };
+qr.addEventListener('click', toggleQr);
+shadow.addEventListener('click', toggleQr);
+</script>
+  </body>
+</html>

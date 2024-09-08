@@ -1,0 +1,61 @@
+<html>
+<head><style>
+body {
+background-color: #ffffff;
+background-image: url("data:image/svg+xml,%3Csvg width='12' height='16' viewBox='0 0 12 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 .99C4 .445 4.444 0 5 0c.552 0 1 .45 1 .99v4.02C6 5.555 5.556 6 5 6c-.552 0-1-.45-1-.99V.99zm6 8c0-.546.444-.99 1-.99.552 0 1 .45 1 .99v4.02c0 .546-.444.99-1 .99-.552 0-1-.45-1-.99V8.99z' fill='%23d7d5da' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
+font-family: sans-serif;
+margin: 128px;
+}
+center {
+	padding: 128px;
+}
+pre {
+	background: #202020;
+	color: #707070;
+	padding: 20px;
+	text-color: 20px;
+}
+</style></head>
+<body>
+<h1>It's a smolsite!</h1>
+
+<p>This whole site fits inside the URL!</p>
+
+<p>To host yours: use the command-line: put everything in a ZIP file, Base 64 encode it, and tack it after "https://smolsite.zip/".  For instance, if your
+smol site is comprised of two files, <tt>index.html</tt> and <tt>mylogo.png</tt>, you can generate a URL like so:</p>
+
+<pre>
+$ echo "https://smolsite.zip/`zip -DXjq9 - index.html mylogo.png | base64 --wrap 0`"
+</pre>
+
+<h1 style="margin-top: 300px">FAQ</h1>
+<h2>I don't have a command line, can I still share a smolsite?</h2>
+<p>Sure, drag the ZIP file to the bottom purple bar.</p>
+
+<h2>Can I host a website on a piece of paper?</h2>
+<p>Yes! Click on the QR code below to see a printable/scannable version
+of this website.</p>
+
+<h2>Is this open source?</h2>
+<p>Yes, it's open source, part of the <a href="https://turboserve.ws">turboserve web server project</a>.</p>
+
+<h2>Is the ZIP file unpacked in the server?</h2> <p>The contents are
+processed in the server and kept in RAM for 15 minutes.  The content is gone
+after that, unless someone opens the same link again.</p>
+
+<h2>Is this protected against ZIP bombs?</h2> <p>Deflated data is sent back
+unmodified to browsers, and no recursive unzipping happens.  So, yes, it's
+somewhat protected against ZIP bombs.</p>
+
+<h2>Can content be taken down?</h2> <p>We'll do our best to ensure exact URLs
+are blocked from being shared by smolsite. (We can't fully take the content
+down, as it is in the URL and that's something we do not control: if someone
+has a link to improper content, they can extract it without the need of
+smolsite.)
+Send the full link to <tt>abuse.smolsite&commat;tia.mat.br</tt>
+with the reason the content should be taken down and we'll take it from there.</p>
+
+</body>
+
+</html>
+
