@@ -1,5 +1,5 @@
 /*
- * lwan - web server
+ * turboserve - web server
  * Copyright (c) 2016 L. A. F. Pereira <l@tia.mat.br>
  *
  * This program is free software; you can redistribute it and/or
@@ -27,11 +27,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#if defined(LWAN_HAVE_BROTLI)
+#if defined(turboserve_HAVE_BROTLI)
 #include <brotli/encode.h>
-#elif defined(LWAN_HAVE_ZSTD)
+#elif defined(turboserve_HAVE_ZSTD)
 #include <zstd.h>
-#elif defined(LWAN_HAVE_ZOPFLI)
+#elif defined(turboserve_HAVE_ZOPFLI)
 #include <zopfli/zopfli.h>
 #else
 #include <zlib.h>
@@ -100,7 +100,7 @@ static char *compress_output(const struct output *output, size_t *outlen)
 {
     char *compressed;
 
-#if defined(LWAN_HAVE_BROTLI)
+#if defined(turboserve_HAVE_BROTLI)
     *outlen = BrotliEncoderMaxCompressedSize(output->used);
 
     compressed = malloc(*outlen);
@@ -116,7 +116,7 @@ static char *compress_output(const struct output *output, size_t *outlen)
         fprintf(stderr, "Could not compress mime type table with Brotli\n");
         exit(1);
     }
-#elif defined(LWAN_HAVE_ZSTD)
+#elif defined(turboserve_HAVE_ZSTD)
     *outlen = ZSTD_compressBound(output->used);
 
     compressed = malloc(*outlen);
@@ -131,7 +131,7 @@ static char *compress_output(const struct output *output, size_t *outlen)
         fprintf(stderr, "Could not compress mime type table with ZSTD\n");
         exit(1);
     }
-#elif defined(LWAN_HAVE_ZOPFLI)
+#elif defined(turboserve_HAVE_ZOPFLI)
     ZopfliOptions opts;
 
     *outlen = 0;
@@ -299,7 +299,7 @@ int main(int argc, char *argv[])
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wstringop-truncation"
-        /* See lwan_determine_mime_type_for_file_name() in lwan-tables.c */
+        /* See turboserve_determine_mime_type_for_file_name() in turboserve-tables.c */
         strncpy((char *)&ext_lower, exts[i], 8);
 #pragma GCC diagnostic pop
 
@@ -338,11 +338,11 @@ int main(int argc, char *argv[])
     }
 
     /* Print output. */
-#if defined(LWAN_HAVE_BROTLI)
+#if defined(turboserve_HAVE_BROTLI)
     printf("/* Compressed with brotli */\n");
-#elif defined(LWAN_HAVE_ZSTD)
+#elif defined(turboserve_HAVE_ZSTD)
     printf("/* Compressed with zstd */\n");
-#elif defined(LWAN_HAVE_ZOPFLI)
+#elif defined(turboserve_HAVE_ZOPFLI)
     printf("/* Compressed with zopfli (deflate) */\n");
 #else
     printf("/* Compressed with zlib (deflate) */\n");

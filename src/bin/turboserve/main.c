@@ -1,5 +1,5 @@
 /*
- * lwan - web server
+ * turboserve - web server
  * Copyright (c) 2012 L. A. F. Pereira <l@tia.mat.br>
  *
  * This program is free software; you can redistribute it and/or
@@ -23,8 +23,8 @@
 #include <unistd.h>
 #include <limits.h>
 
-#include "lwan-private.h"
-#include "lwan-mod-serve-files.h"
+#include "turboserve-private.h"
+#include "turboserve-mod-serve-files.h"
 
 enum args {
     ARGS_FAILED,
@@ -34,11 +34,11 @@ enum args {
 
 static void print_module_info(void)
 {
-    const struct lwan_module_info *module;
+    const struct turboserve_module_info *module;
     int count = 0;
 
     printf("Built-in modules:");
-    LWAN_SECTION_FOREACH(lwan_module, module) {
+    turboserve_SECTION_FOREACH(turboserve_module, module) {
         printf(" %s", module->name);
         count++;
     }
@@ -48,11 +48,11 @@ static void print_module_info(void)
 static void
 print_handler_info(void)
 {
-    const struct lwan_handler_info *handler;
+    const struct turboserve_handler_info *handler;
     int count = 0;
 
     printf("Built-in handlers:");
-    LWAN_SECTION_FOREACH(lwan_handler, handler) {
+    turboserve_SECTION_FOREACH(turboserve_handler, handler) {
         if (!handler->route)
             continue;
 
@@ -67,58 +67,58 @@ print_build_time_configuration(void)
 {
     printf("Build-time configuration:");
 
-#if defined(LWAN_HAVE_LUA_JIT)
+#if defined(turboserve_HAVE_LUA_JIT)
     printf(" LuaJIT");
-#elif defined(LWAN_HAVE_LUA)
+#elif defined(turboserve_HAVE_LUA)
     printf(" Lua");
 #endif
 
-#if defined(LWAN_HAVE_BROTLI)
+#if defined(turboserve_HAVE_BROTLI)
     printf(" Brotli");
 #endif
-#if defined(LWAN_HAVE_ZSTD)
+#if defined(turboserve_HAVE_ZSTD)
     printf(" zstd");
 #endif
 
-#if defined(LWAN_HAVE_MBEDTLS)
+#if defined(turboserve_HAVE_MBEDTLS)
     printf(" mbedTLS");
 #endif
 
-#if defined(LWAN_HAVE_LIBUCONTEXT)
+#if defined(turboserve_HAVE_LIBUCONTEXT)
     printf(" libucontext-coroutine");
 #else
     printf(" builtin-coroutine");
 #endif
 
-#if defined(LWAN_HAVE_EPOLL)
+#if defined(turboserve_HAVE_EPOLL)
     printf(" epoll");
-#elif defined(LWAN_HAVE_KQUEUE)
+#elif defined(turboserve_HAVE_KQUEUE)
     printf(" kqueue");
 #endif
 
-#if defined(LWAN_HAVE_SO_ATTACH_REUSEPORT_CBPF)
+#if defined(turboserve_HAVE_SO_ATTACH_REUSEPORT_CBPF)
     printf(" sockopt-reuseport-CBPF");
-#elif defined(LWAN_HAVE_SO_INCOMING_CPU)
+#elif defined(turboserve_HAVE_SO_INCOMING_CPU)
     printf(" sockopt-reuseport-incoming-cpu");
 #endif
 
-#if !defined(NDEBUG) && defined(LWAN_HAVE_VALGRIND)
+#if !defined(NDEBUG) && defined(turboserve_HAVE_VALGRIND)
     printf(" valgrind");
 #endif
 
-#if defined(LWAN_HAVE_SYSLOG)
+#if defined(turboserve_HAVE_SYSLOG)
     printf(" syslog");
 #endif
 
-#if defined(LWAN_HAVE_UNDEFINED_SANITIZER)
+#if defined(turboserve_HAVE_UNDEFINED_SANITIZER)
     printf(" ubsan");
 #endif
 
-#if defined(LWAN_HAVE_ADDRESS_SANITIZER)
+#if defined(turboserve_HAVE_ADDRESS_SANITIZER)
     printf(" asan");
 #endif
 
-#if defined(LWAN_HAVE_THREAD_SANITIZER)
+#if defined(turboserve_HAVE_THREAD_SANITIZER)
     printf(" tsan");
 #endif
 
@@ -130,20 +130,20 @@ print_build_time_configuration(void)
 }
 
 static void
-print_help(const char *argv0, const struct lwan_config *config)
+print_help(const char *argv0, const struct turboserve_config *config)
 {
     char path_buf[PATH_MAX];
     char *current_dir = get_current_dir_name();
-    const char *config_file = lwan_get_config_path(path_buf, sizeof(path_buf));
+    const char *config_file = turboserve_get_config_path(path_buf, sizeof(path_buf));
 
     printf("Usage: %s [--root /path/to/root/dir] [--listen addr:port]\n", argv0);
-#if defined(LWAN_HAVE_MBEDTLS)
+#if defined(turboserve_HAVE_MBEDTLS)
     printf("       [--tls-listen addr:port] [--cert-path /cert/path] [--cert-key /key/path]\n");
 #endif
     printf("       [--config /path/to/config/file] [--user username]\n");
     printf("       [--chroot /path/to/chroot/directory]\n");
     printf("\n");
-#if defined(LWAN_HAVE_MBEDTLS)
+#if defined(turboserve_HAVE_MBEDTLS)
     printf("Serve files through HTTP or HTTPS.\n\n");
 #else
     printf("Serve files through HTTP.\n\n");
@@ -152,7 +152,7 @@ print_help(const char *argv0, const struct lwan_config *config)
     printf("  -r, --root       Path to serve files from (default: ./wwwroot).\n");
     printf("\n");
     printf("  -l, --listen     Listener (default: %s).\n", config->listener);
-#if defined(LWAN_HAVE_MBEDTLS)
+#if defined(turboserve_HAVE_MBEDTLS)
     printf("  -L, --tls-listen TLS Listener (default: %s).\n",
             config->tls_listener ?
             config->tls_listener : "not listening");
@@ -161,7 +161,7 @@ print_help(const char *argv0, const struct lwan_config *config)
     printf("  -c, --config     Path to config file path.\n");
     printf("  -u, --user       Username to drop privileges to (root required).\n");
     printf("  -C, --chroot     Chroot to path passed to --root (root required).\n");
-#if defined(LWAN_HAVE_MBEDTLS)
+#if defined(turboserve_HAVE_MBEDTLS)
     printf("\n");
     printf("  -P, --cert-path  Path to TLS certificate.\n");
     printf("  -K, --cert-key   Path to TLS key.\n");
@@ -180,7 +180,7 @@ print_help(const char *argv0, const struct lwan_config *config)
     printf("    %s\n", argv0);
     printf("  Use /etc/%s:\n", config_file);
     printf("    %s -c /etc/%s\n", argv0, config_file);
-#if defined(LWAN_HAVE_MBEDTLS)
+#if defined(turboserve_HAVE_MBEDTLS)
     printf("  Serve system docs with HTTP and HTTPS:\n");
     printf("    %s -P /path/to/cert.pem -K /path/to/cert.key \\\n"
            "       -l '*:8080' -L '*:8081' -r /usr/share/doc\n", argv0);
@@ -190,15 +190,15 @@ print_help(const char *argv0, const struct lwan_config *config)
     print_module_info();
     print_handler_info();
     printf("\n");
-    printf("Report bugs at <https://github.com/lpereira/lwan>.\n");
+    printf("Report bugs at <https://github.com/lpereira/turboserve>.\n");
     printf("For security-related reports, mail them to <security@tia.mat.br>.\n");
 
     free(current_dir);
 }
 
 static enum args
-parse_args(int argc, char *argv[], struct lwan_config *config, char *root,
-    struct lwan_straitjacket *sj)
+parse_args(int argc, char *argv[], struct turboserve_config *config, char *root,
+    struct turboserve_straitjacket *sj)
 {
     static const struct option opts[] = {
         { .name = "root", .has_arg = 1, .val = 'r' },
@@ -207,7 +207,7 @@ parse_args(int argc, char *argv[], struct lwan_config *config, char *root,
         { .name = "config", .has_arg = 1, .val = 'c' },
         { .name = "chroot", .val = 'C' },
         { .name = "user", .val = 'u', .has_arg = 1 },
-#if defined(LWAN_HAVE_MBEDTLS)
+#if defined(turboserve_HAVE_MBEDTLS)
         { .name = "tls-listen", .val = 'L', .has_arg = 1 },
         { .name = "cert-path", .val = 'P', .has_arg = 1 },
         { .name = "cert-key", .val = 'K', .has_arg = 1 },
@@ -219,7 +219,7 @@ parse_args(int argc, char *argv[], struct lwan_config *config, char *root,
 
     while ((c = getopt_long(argc, argv, "L:P:K:hr:l:c:u:C", opts, &optidx)) != -1) {
         switch (c) {
-#if defined(LWAN_HAVE_MBEDTLS)
+#if defined(turboserve_HAVE_MBEDTLS)
         case 'L':
             free(config->tls_listener);
             config->tls_listener = strdup(optarg);
@@ -286,9 +286,9 @@ parse_args(int argc, char *argv[], struct lwan_config *config, char *root,
 int
 main(int argc, char *argv[])
 {
-    struct lwan l;
-    struct lwan_config c;
-    struct lwan_straitjacket sj = {};
+    struct turboserve l;
+    struct turboserve_config c;
+    struct turboserve_straitjacket sj = {};
     char root_buf[PATH_MAX];
     char *root = root_buf;
     int ret = EXIT_SUCCESS;
@@ -296,40 +296,40 @@ main(int argc, char *argv[])
     if (!getcwd(root, PATH_MAX))
         return 1;
 
-    c = *lwan_get_default_config();
+    c = *turboserve_get_default_config();
     c.listener = strdup("*:8080");
 
     switch (parse_args(argc, argv, &c, root, &sj)) {
     case ARGS_SERVE_FILES:
-        lwan_status_info("Serving files from %s", root);
+        turboserve_status_info("Serving files from %s", root);
 
         if (sj.chroot_path) {
             root = "/";
         }
-        lwan_straitjacket_enforce(&sj);
+        turboserve_straitjacket_enforce(&sj);
 
-        lwan_init_with_config(&l, &c);
+        turboserve_init_with_config(&l, &c);
 
-        const struct lwan_url_map map[] = {
+        const struct turboserve_url_map map[] = {
             { .prefix = "/", SERVE_FILES_SETTINGS(root, "index.html", true) },
             { }
         };
-        lwan_set_url_map(&l, map);
+        turboserve_set_url_map(&l, map);
         break;
     case ARGS_USE_CONFIG:
-        lwan_straitjacket_enforce(&sj);
+        turboserve_straitjacket_enforce(&sj);
         if (c.config_file_path)
-            lwan_init_with_config(&l, &c);
+            turboserve_init_with_config(&l, &c);
         else
-            lwan_init(&l);
+            turboserve_init(&l);
         break;
     case ARGS_FAILED:
         ret = EXIT_FAILURE;
         goto out;
     }
 
-    lwan_main_loop(&l);
-    lwan_shutdown(&l);
+    turboserve_main_loop(&l);
+    turboserve_shutdown(&l);
 
 out:
     free(c.listener);

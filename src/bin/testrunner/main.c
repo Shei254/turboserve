@@ -1,5 +1,5 @@
 /*
- * lwan - web server
+ * turboserve - web server
  * Copyright (c) 2012 L. A. F. Pereira <l@tia.mat.br>
  *
  * This program is free software; you can redistribute it and/or
@@ -21,15 +21,15 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "lwan-private.h"
+#include "turboserve-private.h"
 
-LWAN_HANDLER(quit_lwan)
+turboserve_HANDLER(quit_turboserve)
 {
     exit(0);
     return HTTP_OK;
 }
 
-LWAN_HANDLER(gif_beacon)
+turboserve_HANDLER(gif_beacon)
 {
     /*
      * 1x1 transparent GIF image generated with tinygif
@@ -43,61 +43,61 @@ LWAN_HANDLER(gif_beacon)
     };
 
     response->mime_type = "image/gif";
-    lwan_strbuf_set_static(response->buffer, (char*)gif_beacon_data, sizeof(gif_beacon_data));
+    turboserve_strbuf_set_static(response->buffer, (char*)gif_beacon_data, sizeof(gif_beacon_data));
 
     return HTTP_OK;
 }
 
-LWAN_HANDLER(test_chunked_encoding)
+turboserve_HANDLER(test_chunked_encoding)
 {
     int i;
 
     response->mime_type = "text/plain";
 
-    lwan_strbuf_printf(response->buffer, "Testing chunked encoding! First chunk\n");
-    lwan_response_send_chunk(request);
+    turboserve_strbuf_printf(response->buffer, "Testing chunked encoding! First chunk\n");
+    turboserve_response_send_chunk(request);
 
     for (i = 0; i <= 10; i++) {
-        lwan_strbuf_printf(response->buffer, "*This is chunk %d*\n", i);
-        lwan_response_send_chunk(request);
+        turboserve_strbuf_printf(response->buffer, "*This is chunk %d*\n", i);
+        turboserve_response_send_chunk(request);
     }
 
-    lwan_strbuf_printf(response->buffer, "Last chunk\n");
-    lwan_response_send_chunk(request);
+    turboserve_strbuf_printf(response->buffer, "Last chunk\n");
+    turboserve_response_send_chunk(request);
 
     return HTTP_OK;
 }
 
-LWAN_HANDLER(test_server_sent_event)
+turboserve_HANDLER(test_server_sent_event)
 {
     int i;
 
     for (i = 0; i <= 10; i++) {
-        lwan_strbuf_printf(response->buffer, "Current value is %d", i);
-        lwan_response_send_event(request, "currval");
+        turboserve_strbuf_printf(response->buffer, "Current value is %d", i);
+        turboserve_response_send_event(request, "currval");
     }
 
     return HTTP_OK;
 }
 
-LWAN_HANDLER(get_query_string)
+turboserve_HANDLER(get_query_string)
 {
-    const char *q = lwan_request_get_query_param(request, "q");
+    const char *q = turboserve_request_get_query_param(request, "q");
     if (!q)
         return HTTP_BAD_REQUEST;
 
-    const char *v = lwan_request_get_query_param(request, q);
+    const char *v = turboserve_request_get_query_param(request, q);
     if (!v)
         return HTTP_NOT_FOUND;
 
     response->mime_type = "text/plain";
-    lwan_strbuf_printf(response->buffer, "%s = %s", q, v);
+    turboserve_strbuf_printf(response->buffer, "%s = %s", q, v);
     return HTTP_OK;
 }
 
-LWAN_HANDLER(test_proxy)
+turboserve_HANDLER(test_proxy)
 {
-    struct lwan_key_value *headers = coro_malloc(request->conn->coro, sizeof(*headers) * 2);
+    struct turboserve_key_value *headers = coro_malloc(request->conn->coro, sizeof(*headers) * 2);
     if (UNLIKELY(!headers))
         return HTTP_INTERNAL_ERROR;
 
@@ -106,7 +106,7 @@ LWAN_HANDLER(test_proxy)
         return HTTP_INTERNAL_ERROR;
 
     headers[0].key = "X-Proxy";
-    headers[0].value = (char*) lwan_request_get_remote_address(request, buffer);
+    headers[0].value = (char*) turboserve_request_get_remote_address(request, buffer);
     headers[1].key = NULL;
     headers[1].value = NULL;
 
@@ -115,14 +115,14 @@ LWAN_HANDLER(test_proxy)
     return HTTP_OK;
 }
 
-LWAN_HANDLER(test_post_will_it_blend)
+turboserve_HANDLER(test_post_will_it_blend)
 {
     static const char type[] = "application/json";
     static const char request_body[] = "{\"will-it-blend\": true}";
     static const char response_body[] = "{\"did-it-blend\": \"oh-hell-yeah\"}";
-    const struct lwan_value *content_type =
-        lwan_request_get_content_type(request);
-    const struct lwan_value *body = lwan_request_get_request_body(request);
+    const struct turboserve_value *content_type =
+        turboserve_request_get_content_type(request);
+    const struct turboserve_value *body = turboserve_request_get_request_body(request);
 
     if (!content_type->value)
         return HTTP_BAD_REQUEST;
@@ -139,19 +139,19 @@ LWAN_HANDLER(test_post_will_it_blend)
         return HTTP_BAD_REQUEST;
 
     response->mime_type = type;
-    lwan_strbuf_set_static(response->buffer, response_body,
+    turboserve_strbuf_set_static(response->buffer, response_body,
                            sizeof(response_body) - 1);
 
     return HTTP_OK;
 }
 
-LWAN_HANDLER(test_post_big)
+turboserve_HANDLER(test_post_big)
 {
     static const char type[] = "x-test/trololo";
     size_t i, sum = 0;
-    const struct lwan_value *content_type =
-        lwan_request_get_content_type(request);
-    const struct lwan_value *body = lwan_request_get_request_body(request);
+    const struct turboserve_value *content_type =
+        turboserve_request_get_content_type(request);
+    const struct turboserve_value *body = turboserve_request_get_request_body(request);
 
     if (!content_type->value)
         return HTTP_BAD_REQUEST;
@@ -164,16 +164,16 @@ LWAN_HANDLER(test_post_big)
         sum += (size_t)body->value[i];
 
     response->mime_type = "application/json";
-    lwan_strbuf_printf(response->buffer, "{\"received\": %zu, \"sum\": %zu}",
+    turboserve_strbuf_printf(response->buffer, "{\"received\": %zu, \"sum\": %zu}",
                        body->len, sum);
 
     return HTTP_OK;
 }
 
-LWAN_HANDLER(hello_world)
+turboserve_HANDLER(hello_world)
 {
-    struct lwan_key_value *iter;
-    static struct lwan_key_value headers[] = {
+    struct turboserve_key_value *iter;
+    static struct turboserve_key_value headers[] = {
         { .key = "X-The-Answer-To-The-Universal-Question", .value = "42" },
         { NULL, NULL }
     };
@@ -182,55 +182,55 @@ LWAN_HANDLER(hello_world)
 
     request->flags |= RESPONSE_INCLUDE_REQUEST_ID;
 
-    const char *name = lwan_request_get_query_param(request, "name");
+    const char *name = turboserve_request_get_query_param(request, "name");
     if (name)
-        lwan_strbuf_printf(response->buffer, "Hello, %s!", name);
+        turboserve_strbuf_printf(response->buffer, "Hello, %s!", name);
     else
-        lwan_strbuf_set_static(response->buffer, "Hello, world!", sizeof("Hello, world!") -1);
+        turboserve_strbuf_set_static(response->buffer, "Hello, world!", sizeof("Hello, world!") -1);
 
-    const char *dump_vars = lwan_request_get_query_param(request, "dump_vars");
+    const char *dump_vars = turboserve_request_get_query_param(request, "dump_vars");
     if (!dump_vars)
         goto end;
 
-    lwan_strbuf_append_strz(response->buffer, "\n\nCookies\n");
-    lwan_strbuf_append_strz(response->buffer, "-------\n\n");
+    turboserve_strbuf_append_strz(response->buffer, "\n\nCookies\n");
+    turboserve_strbuf_append_strz(response->buffer, "-------\n\n");
 
-    LWAN_ARRAY_FOREACH(lwan_request_get_cookies(request), iter) {
-        lwan_strbuf_append_printf(response->buffer,
+    turboserve_ARRAY_FOREACH(turboserve_request_get_cookies(request), iter) {
+        turboserve_strbuf_append_printf(response->buffer,
                     "Key = \"%s\"; Value = \"%s\"\n", iter->key, iter->value);
     }
 
-    lwan_strbuf_append_strz(response->buffer, "\n\nQuery String Variables\n");
-    lwan_strbuf_append_strz(response->buffer, "----------------------\n\n");
+    turboserve_strbuf_append_strz(response->buffer, "\n\nQuery String Variables\n");
+    turboserve_strbuf_append_strz(response->buffer, "----------------------\n\n");
 
-    LWAN_ARRAY_FOREACH(lwan_request_get_query_params(request), iter) {
-        lwan_strbuf_append_printf(response->buffer,
+    turboserve_ARRAY_FOREACH(turboserve_request_get_query_params(request), iter) {
+        turboserve_strbuf_append_printf(response->buffer,
                     "Key = \"%s\"; Value = \"%s\"\n", iter->key, iter->value);
     }
 
-    if (lwan_request_get_method(request) == REQUEST_METHOD_POST) {
-        lwan_strbuf_append_strz(response->buffer, "\n\nPOST data\n");
-        lwan_strbuf_append_strz(response->buffer, "---------\n\n");
+    if (turboserve_request_get_method(request) == REQUEST_METHOD_POST) {
+        turboserve_strbuf_append_strz(response->buffer, "\n\nPOST data\n");
+        turboserve_strbuf_append_strz(response->buffer, "---------\n\n");
 
-        LWAN_ARRAY_FOREACH(lwan_request_get_post_params(request), iter) {
-            lwan_strbuf_append_printf(response->buffer,
+        turboserve_ARRAY_FOREACH(turboserve_request_get_post_params(request), iter) {
+            turboserve_strbuf_append_printf(response->buffer,
                         "Key = \"%s\"; Value = \"%s\"\n", iter->key, iter->value);
         }
     }
 
-    const char *dump_request_id = lwan_request_get_query_param(request, "dump_request_id");
+    const char *dump_request_id = turboserve_request_get_query_param(request, "dump_request_id");
     if (dump_request_id && streq(dump_request_id, "1")) {
-        lwan_strbuf_append_printf(response->buffer, "\nRequest ID: <<%016lx>>",
-                                  lwan_request_get_id(request));
+        turboserve_strbuf_append_printf(response->buffer, "\nRequest ID: <<%016lx>>",
+                                  turboserve_request_get_id(request));
     }
 
 end:
     return HTTP_OK;
 }
 
-LWAN_HANDLER(sleep)
+turboserve_HANDLER(sleep)
 {
-    const char *ms_param = lwan_request_get_query_param(request, "ms");
+    const char *ms_param = turboserve_request_get_query_param(request, "ms");
     uint64_t ms;
 
     if (!ms_param)
@@ -245,45 +245,45 @@ LWAN_HANDLER(sleep)
 
         clock_gettime(CLOCK_MONOTONIC, &t1);
 
-        lwan_request_sleep(request, ms);
+        turboserve_request_sleep(request, ms);
 
         clock_gettime(CLOCK_MONOTONIC, &t2);
         diff_ms = (t2.tv_sec - t1.tv_sec) * 1000;
         diff_ms += (t2.tv_nsec - t1.tv_nsec) / 1000000;
 
-        lwan_strbuf_printf(response->buffer,
+        turboserve_strbuf_printf(response->buffer,
                            "Returned from sleep. diff_ms = %"PRIi64, diff_ms);
     } else {
-        lwan_strbuf_set_staticz(response->buffer, "Did not sleep");
+        turboserve_strbuf_set_staticz(response->buffer, "Did not sleep");
     }
 
     return HTTP_OK;
 }
 
-LWAN_HANDLER(custom_header)
+turboserve_HANDLER(custom_header)
 {
-    const char *hdr = lwan_request_get_query_param(request, "hdr");
+    const char *hdr = turboserve_request_get_query_param(request, "hdr");
 
     if (!hdr)
         return HTTP_NOT_FOUND;
 
-    const char *val = lwan_request_get_header(request, hdr);
+    const char *val = turboserve_request_get_header(request, hdr);
     if (!val)
         return HTTP_NOT_FOUND;
 
     response->mime_type = "text/plain";
-    lwan_strbuf_printf(response->buffer, "Header value: '%s'", val);
+    turboserve_strbuf_printf(response->buffer, "Header value: '%s'", val);
     return HTTP_OK;
 }
 
 int
 main()
 {
-    struct lwan l;
+    struct turboserve l;
 
-    lwan_init(&l);
-    lwan_main_loop(&l);
-    lwan_shutdown(&l);
+    turboserve_init(&l);
+    turboserve_main_loop(&l);
+    turboserve_shutdown(&l);
 
     return EXIT_SUCCESS;
 }

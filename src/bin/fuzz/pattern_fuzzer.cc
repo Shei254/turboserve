@@ -4,7 +4,7 @@
 
 extern "C" {
 #include "patterns.h"
-#include "lwan-private.h"
+#include "turboserve-private.h"
 }
 
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
@@ -24,11 +24,11 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
     memcpy(static_data, data, size);
     static_data[size - 1] = '\0';
 
-    LWAN_NO_DISCARD(str_find((char *)static_data, "foo/(%d+)(%a)(%d+)", sf,
+    turboserve_NO_DISCARD(str_find((char *)static_data, "foo/(%d+)(%a)(%d+)", sf,
                              N_ELEMENTS(sf), &errmsg));
-    LWAN_NO_DISCARD(str_find((char *)static_data, "bar/(%d+)/test", sf,
+    turboserve_NO_DISCARD(str_find((char *)static_data, "bar/(%d+)/test", sf,
                              N_ELEMENTS(sf), &errmsg));
-    LWAN_NO_DISCARD(str_find((char *)static_data, "lua/rewrite/(%d+)x(%d+)", sf,
+    turboserve_NO_DISCARD(str_find((char *)static_data, "lua/rewrite/(%d+)x(%d+)", sf,
                              N_ELEMENTS(sf), &errmsg));
 
     return 0;

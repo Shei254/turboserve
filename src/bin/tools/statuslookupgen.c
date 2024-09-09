@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../lib/lwan-http-status.h"
+#include "../../lib/turboserve-http-status.h"
 
 static inline uint32_t rotate(uint32_t v, int n)
 {
@@ -79,7 +79,7 @@ int main(void)
     }
 
     uint64_t set_values = ~0ull;
-    printf("static ALWAYS_INLINE const char *lwan_lookup_http_status_impl(enum lwan_http_status status) {\n");
+    printf("static ALWAYS_INLINE const char *turboserve_lookup_http_status_impl(enum turboserve_http_status status) {\n");
     printf("    static const char *table[] = {\n");
 
 #define PRINT_V(ignored1, key, short_desc, long_desc)                          \

@@ -9,7 +9,7 @@
     "",
     "\\src",
     "\\src\\bin",
-    "\\src\\bin\\turboserve",
+    "\\src\\bin\\tools",
     "\\src\\samples",
     "\\src\\samples\\asyncawait",
     "\\src\\samples\\hello",
