@@ -8,8 +8,8 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\bin",
     "\\src\\bin\\tools",
+    "\\src\\lib",
     "\\src\\samples",
     "\\src\\samples\\asyncawait",
     "\\src\\samples\\hello",
@@ -17,5 +17,6 @@
     "\\src\\samples\\send-money-json-api",
     "\\src\\scripts"
   ],
+  "SelectedNode": "\\src\\lib\\libturboserve.sym",
   "PreviewInSolutionExplorer": false
 }
