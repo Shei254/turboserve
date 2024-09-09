@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Admin\\source\\repos\\lwan\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\source\\repos\\lwan\\turboserve.conf||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:turboserve.conf||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\source\\repos\\lwan\\src\\bin\\turboserve\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\bin\\turboserve\\CMakeLists.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
@@ -45,11 +49,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "turboserve.conf",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\lwan\\turboserve.conf",
+              "RelativeDocumentMoniker": "turboserve.conf",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\lwan\\turboserve.conf",
+              "RelativeToolTip": "turboserve.conf",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABEAAAA5AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-09-09T01:10:44.337Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "CMakeLists.txt",
               "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\lwan\\src\\bin\\CMakeLists.txt",
               "RelativeDocumentMoniker": "src\\bin\\CMakeLists.txt",
@@ -57,12 +74,11 @@
               "RelativeToolTip": "src\\bin\\CMakeLists.txt",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2024-09-09T00:23:33.668Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T00:23:33.668Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "CMakeLists.txt",
               "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\lwan\\src\\bin\\turboserve\\CMakeLists.txt",
               "RelativeDocumentMoniker": "src\\bin\\turboserve\\CMakeLists.txt",
@@ -75,7 +91,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "FUNDING.yml",
               "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\lwan\\.github\\FUNDING.yml",
               "RelativeDocumentMoniker": ".github\\FUNDING.yml",
@@ -83,12 +99,11 @@
               "RelativeToolTip": ".github\\FUNDING.yml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
-              "WhenOpened": "2024-09-09T00:18:50.629Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T00:18:50.629Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "FindPackageHandleStandardArgs.cmake",
               "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.28\\Modules\\FindPackageHandleStandardArgs.cmake",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.28\\Modules\\FindPackageHandleStandardArgs.cmake",
@@ -96,12 +111,11 @@
               "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.28\\Modules\\FindPackageHandleStandardArgs.cmake",
               "ViewState": "AQIAAG4AAAAAAAAAAAAlwOUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-09-09T00:17:58.593Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T00:17:58.593Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "CMakeLists.txt",
               "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\lwan\\CMakeLists.txt",
               "RelativeDocumentMoniker": "CMakeLists.txt",
@@ -109,12 +123,11 @@
               "RelativeToolTip": "CMakeLists.txt",
               "ViewState": "AQIAAKsAAAAAAAAAAAAAAAIAAAAzAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2024-09-09T00:16:33.298Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T00:16:33.298Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "mayhem.yml",
               "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\lwan\\.github\\workflows\\mayhem.yml",
               "RelativeDocumentMoniker": ".github\\workflows\\mayhem.yml",
@@ -122,12 +135,11 @@
               "RelativeToolTip": ".github\\workflows\\mayhem.yml",
               "ViewState": "AQIAADkAAAAAAAAAAAAAAA4AAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
-              "WhenOpened": "2024-09-09T00:16:13.148Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T00:16:13.148Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "cifuzz.yml",
               "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\lwan\\.github\\workflows\\cifuzz.yml",
               "RelativeDocumentMoniker": ".github\\workflows\\cifuzz.yml",
@@ -135,12 +147,11 @@
               "RelativeToolTip": ".github\\workflows\\cifuzz.yml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
-              "WhenOpened": "2024-09-09T00:16:02.806Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T00:16:02.806Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "turboserve.pc.cmake",
               "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\lwan\\src\\cmake\\turboserve.pc.cmake",
               "RelativeDocumentMoniker": "src\\cmake\\turboserve.pc.cmake",
@@ -148,12 +159,11 @@
               "RelativeToolTip": "src\\cmake\\turboserve.pc.cmake",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-09-09T00:15:45.6Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T00:15:45.6Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "bin2hex.c",
               "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\lwan\\src\\bin\\tools\\bin2hex.c",
               "RelativeDocumentMoniker": "src\\bin\\tools\\bin2hex.c",
@@ -161,8 +171,7 @@
               "RelativeToolTip": "src\\bin\\tools\\bin2hex.c",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAABSAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
-              "WhenOpened": "2024-09-09T00:09:05.697Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T00:09:05.697Z"
             }
           ]
         }

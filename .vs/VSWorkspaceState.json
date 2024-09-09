@@ -15,6 +15,6 @@
     "\\src\\cmake",
     "\\src\\scripts"
   ],
-  "SelectedNode": "\\src\\bin\\turboserve\\CMakeLists.txt",
+  "SelectedNode": "\\turboserve.conf",
   "PreviewInSolutionExplorer": false
 }
