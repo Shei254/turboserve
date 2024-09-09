@@ -7,8 +7,8 @@
   },
   "ExpandedNodes": [
     "",
+    "\\src",
     "\\src\\bin",
-    "\\src\\bin\\tools",
     "\\src\\bin\\turboserve",
     "\\src\\samples",
     "\\src\\samples\\asyncawait",
