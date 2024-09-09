@@ -8,13 +8,13 @@ jobs:
       id: build
       uses: google/oss-fuzz/infra/cifuzz/actions/build_fuzzers@master
       with:
-        oss-fuzz-project-name: 'lwan'
+        oss-fuzz-project-name: 'turboserve'
         dry-run: false
         language: c++
     - name: Run Fuzzers
       uses: google/oss-fuzz/infra/cifuzz/actions/run_fuzzers@master
       with:
-        oss-fuzz-project-name: 'lwan'
+        oss-fuzz-project-name: 'turboserve'
         fuzz-seconds: 300
         dry-run: false
         language: c++

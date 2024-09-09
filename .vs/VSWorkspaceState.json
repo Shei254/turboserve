@@ -7,16 +7,16 @@
   },
   "ExpandedNodes": [
     "",
+    "\\.github",
+    "\\.github\\workflows",
     "\\src",
-    "\\src\\bin\\tools",
-    "\\src\\lib",
-    "\\src\\samples",
+    "\\src\\cmake",
     "\\src\\samples\\asyncawait",
     "\\src\\samples\\hello",
     "\\src\\samples\\hello-no-meta",
     "\\src\\samples\\send-money-json-api",
     "\\src\\scripts"
   ],
-  "SelectedNode": "\\src\\lib\\libturboserve.sym",
+  "SelectedNode": "\\.github\\FUNDING.yml",
   "PreviewInSolutionExplorer": false
 }
