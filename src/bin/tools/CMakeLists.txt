@@ -6,12 +6,12 @@ else ()
 		mimegen.c
 		${CMAKE_SOURCE_DIR}/src/lib/hash.c
 		${CMAKE_SOURCE_DIR}/src/lib/missing.c
-		${CMAKE_SOURCE_DIR}/src/lib/lwan-status.c
+		${CMAKE_SOURCE_DIR}/src/lib/turboserve-status.c
 	)
-	if (LWAN_HAVE_BROTLI)
+	if (turboserve_HAVE_BROTLI)
 		message(STATUS "Using Brotli for mimegen")
 		target_link_libraries(mimegen ${BROTLI_LDFLAGS})
-	elseif (LWAN_HAVE_ZSTD)
+	elseif (turboserve_HAVE_ZSTD)
 		message(STATUS "Using Zstd for mimegen")
 		target_link_libraries(mimegen ${ZSTD_LDFLAGS})
 	else ()
@@ -19,7 +19,7 @@ else ()
 		if (ZOPFLI_LIBRARY)
 			message(STATUS "Using Zopfli (${ZOPFLI_LIBRARY}) for mimegen")
 			target_link_libraries(mimegen ${ZOPFLI_LIBRARY})
-			target_compile_definitions(mimegen PUBLIC -DLWAN_HAVE_ZOPFLI=1)
+			target_compile_definitions(mimegen PUBLIC -Dturboserve_HAVE_ZOPFLI=1)
 		else ()
 			message(STATUS "Using zlib (${ZLIB_LIBRARIES}) for mimegen")
 			target_link_libraries(mimegen ${ZLIB_LIBRARIES})
@@ -32,9 +32,9 @@ else ()
 
 	add_executable(configdump
 		configdump.c
-		${CMAKE_SOURCE_DIR}/src/lib/lwan-config.c
-		${CMAKE_SOURCE_DIR}/src/lib/lwan-status.c
-		${CMAKE_SOURCE_DIR}/src/lib/lwan-strbuf.c
+		${CMAKE_SOURCE_DIR}/src/lib/turboserve-config.c
+		${CMAKE_SOURCE_DIR}/src/lib/turboserve-status.c
+		${CMAKE_SOURCE_DIR}/src/lib/turboserve-strbuf.c
 		${CMAKE_SOURCE_DIR}/src/lib/missing.c
 		${CMAKE_SOURCE_DIR}/src/lib/hash.c
 	)

@@ -7,16 +7,15 @@
   },
   "ExpandedNodes": [
     "",
-    "\\src",
-    "\\src\\3rdparty",
+    "\\src\\bin",
+    "\\src\\bin\\tools",
+    "\\src\\bin\\turboserve",
     "\\src\\samples",
     "\\src\\samples\\asyncawait",
     "\\src\\samples\\hello",
     "\\src\\samples\\hello-no-meta",
     "\\src\\samples\\send-money-json-api",
-    "\\src\\scripts",
-    "\\wwwroot"
+    "\\src\\scripts"
   ],
-  "SelectedNode": "\\turboserve.conf",
   "PreviewInSolutionExplorer": false
 }
