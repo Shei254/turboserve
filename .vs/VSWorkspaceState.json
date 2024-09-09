@@ -10,13 +10,11 @@
     "\\.github",
     "\\.github\\workflows",
     "\\src",
+    "\\src\\bin",
+    "\\src\\bin\\turboserve",
     "\\src\\cmake",
-    "\\src\\samples\\asyncawait",
-    "\\src\\samples\\hello",
-    "\\src\\samples\\hello-no-meta",
-    "\\src\\samples\\send-money-json-api",
     "\\src\\scripts"
   ],
-  "SelectedNode": "\\.github\\FUNDING.yml",
+  "SelectedNode": "\\src\\bin\\turboserve\\CMakeLists.txt",
   "PreviewInSolutionExplorer": false
 }

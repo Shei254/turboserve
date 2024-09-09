@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 project(turboserve C)
-set(PROJECT_DESCRIPTION "Scalable, high performance, experimental web server")
+set(PROJECT_DESCRIPTION "Scalable, high performance web server")
 message(STATUS "Running CMake for ${PROJECT_NAME} (${PROJECT_DESCRIPTION})")
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/src/cmake")
